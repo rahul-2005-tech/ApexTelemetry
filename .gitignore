@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment files: ignore real ones, keep safe examples
+.env
+.env.*
+!.env.example
+
+# Python virtual environments, caches, test output
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# FastF1 caches and generated data (default cache lives in %LOCALAPPDATA%,
+# but guard against a local override)
+fastf1-cache/
+fastf1_cache/
+fastf1_http_cache.sqlite
+*.sqlite
+*.sqlite3
+.f1tv-token*
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor and OS files
+.vscode/
+.idea/
+.zed/
+*.swp
+*.tmp
+.DS_Store
+Thumbs.db
+desktop.ini
