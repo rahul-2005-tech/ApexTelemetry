@@ -1,6 +1,7 @@
 """Application settings, read from environment variables or backend/.env."""
 
 import os
+import tempfile
 from datetime import date
 from functools import lru_cache
 from pathlib import Path
@@ -12,7 +13,14 @@ BACKEND_DIR = Path(__file__).resolve().parent.parent
 
 
 def _default_cache_dir() -> Path:
-    """Keep the cache outside OneDrive: %LOCALAPPDATA%\\ApexTelemetry\\fastf1-cache."""
+    """Default cache location. APEX_CACHE_DIR overrides it everywhere.
+
+    Locally: %LOCALAPPDATA%\\ApexTelemetry\\fastf1-cache (outside OneDrive).
+    On Vercel the filesystem is read-only except the temp directory, and its
+    contents do not persist between invocations, so it is only a best-effort cache.
+    """
+    if os.environ.get("VERCEL"):
+        return Path(tempfile.gettempdir()) / "ApexTelemetry" / "fastf1-cache"
     base = os.environ.get("LOCALAPPDATA")
     root = Path(base) if base else Path.home() / ".cache"
     return root / "ApexTelemetry" / "fastf1-cache"
